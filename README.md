@@ -51,35 +51,3 @@ Teste rápido de API (PowerShell):
 $body = '{"dev":"Carlos","branch":"feature/carlos-carrinho","tarefa":"Tela de carrinho"}'
 Invoke-RestMethod -Method Post -Uri 'http://127.0.0.1:5000/api/cards' -ContentType 'application/json' -Body $body | ConvertTo-Json
 ```
-
-## Roteiro de demo para sua apresentação
-
-1. Abra o painel e mostre os cards da equipe em colunas visuais.
-2. Crie uma branch de dev: `feature/ana-painel-ci`.
-3. Faça uma alteração simples no backend (ou teste) para quebrar o pytest.
-4. Envie para o GitLab e abra um Merge Request.
-5. Mostre o pipeline falhando na stage `test` e o merge bloqueado.
-6. Corrija o código na mesma branch.
-7. Mostre o novo pipeline passando e o merge sendo liberado.
-
-## Exemplo de comandos Git para encenar o fluxo
-
-```bash
-git checkout -b feature/ana-painel-ci
-# editar código
-.venv\Scripts\python -m pytest -q
-git add .
-git commit -m "feat: atualiza painel visual"
-git push -u origin feature/ana-painel-ci
-```
-
-Depois, abra o Merge Request no GitLab para `main`.
-
-## Pipeline do GitLab
-
-O arquivo `.gitlab-ci.yml` executa:
-
-- `pip install -r requirements.txt`
-- `pytest -q --maxfail=1`
-
-Se `pytest` retornar erro, o job falha e o MR não deve ser integrado.

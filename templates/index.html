@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Painel CI/CD Visual</title>
+    <link rel="stylesheet" href="/static/style.css" />
+  </head>
+  <body>
+    <main class="container">
+      <section class="hero">
+        <h1>Painel Visual de CI/CD</h1>
+        <p>Simule o fluxo da equipe em branches e a aprovação para merge.</p>
+      </section>
+
+      <section class="form-card">
+        <h2>Novo trabalho de desenvolvedor</h2>
+        <form id="novo-card-form">
+          <label>
+            Desenvolvedor
+            <input id="dev" name="dev" placeholder="Ex.: Carlos" required />
+          </label>
+          <label>
+            Branch
+            <input
+              id="branch"
+              name="branch"
+              placeholder="Ex.: feature/carlos-carrinho"
+              required
+            />
+          </label>
+          <label>
+            Tarefa
+            <input
+              id="tarefa"
+              name="tarefa"
+              placeholder="Ex.: Página de carrinho"
+              required
+            />
+          </label>
+          <button type="submit">Adicionar card</button>
+        </form>
+      </section>
+
+      <section class="board">
+        <article class="column" data-status="backlog">
+          <h3>Backlog da branch</h3>
+          <div class="cards" id="coluna-backlog"></div>
+        </article>
+        <article class="column" data-status="em_teste">
+          <h3>Em teste no CI</h3>
+          <div class="cards" id="coluna-em_teste"></div>
+        </article>
+        <article class="column" data-status="aprovado">
+          <h3>Aprovado para merge</h3>
+          <div class="cards" id="coluna-aprovado"></div>
+        </article>
+      </section>
+    </main>
+
+    <script src="/static/app.js"></script>
+  </body>
+</html>

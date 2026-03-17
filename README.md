@@ -1,19 +1,23 @@
-# Exemplo de GitLab CI/CD - API de Cálculo
+# Exemplo de GitLab CI/CD - Painel Visual
 
-Este projeto demonstra o cenário:
+Este projeto demonstra o cenário de forma visual:
 
-> "Nossa equipe está desenvolvendo uma pequena API de cálculo. Cada desenvolvedor trabalha em uma branch diferente, e quando o código é enviado para o repositório o GitLab executa testes automaticamente antes de permitir a integração no projeto principal."
+> "Nossa equipe trabalha em branches separadas, e quando o código é enviado para o GitLab os testes rodam automaticamente antes de liberar a integração na main."
 
 ## O que existe neste exemplo
 
-- API em Flask com endpoint de saúde e cálculo
+- Interface web com quadro visual (Backlog -> Em teste -> Aprovado)
+- API em Flask para criar cards e mover status
 - Testes automatizados com pytest
 - Pipeline no GitLab em `.gitlab-ci.yml` que roda os testes em push/MR
 
 ## Estrutura
 
-- `app.py`: API e função principal de cálculo
-- `tests/test_app.py`: testes unitários e de endpoint
+- `app.py`: backend Flask e rotas da API
+- `templates/index.html`: interface visual
+- `static/style.css`: estilo do painel
+- `static/app.js`: lógica da interface
+- `tests/test_app.py`: testes de página e endpoints
 - `.gitlab-ci.yml`: pipeline CI
 
 ## Regras de integração (mensagem da apresentação)
@@ -31,25 +35,28 @@ python -m venv .venv
 .venv\Scripts\python -m pytest -q
 ```
 
-## Como rodar a API localmente
+## Como abrir o painel visual
 
 ```bash
 .venv\Scripts\python app.py
 ```
 
-Teste rápido:
+Depois abra no navegador:
+
+- `http://127.0.0.1:5000`
+
+Teste rápido de API (PowerShell):
 
 ```bash
-curl -X POST http://127.0.0.1:5000/calcular \
-  -H "Content-Type: application/json" \
-  -d '{"operacao":"soma","a":10,"b":5}'
+$body = '{"dev":"Carlos","branch":"feature/carlos-carrinho","tarefa":"Tela de carrinho"}'
+Invoke-RestMethod -Method Post -Uri 'http://127.0.0.1:5000/api/cards' -ContentType 'application/json' -Body $body | ConvertTo-Json
 ```
 
 ## Roteiro de demo para sua apresentação
 
-1. Mostre que a branch `main` está estável com pipeline verde.
-2. Crie uma branch de dev: `feature/ana-ajusta-calculo`.
-3. Faça uma mudança que quebre um teste (ex.: alterar regra da divisão).
+1. Abra o painel e mostre os cards da equipe em colunas visuais.
+2. Crie uma branch de dev: `feature/ana-painel-ci`.
+3. Faça uma alteração simples no backend (ou teste) para quebrar o pytest.
 4. Envie para o GitLab e abra um Merge Request.
 5. Mostre o pipeline falhando na stage `test` e o merge bloqueado.
 6. Corrija o código na mesma branch.
@@ -58,12 +65,12 @@ curl -X POST http://127.0.0.1:5000/calcular \
 ## Exemplo de comandos Git para encenar o fluxo
 
 ```bash
-git checkout -b feature/ana-ajusta-calculo
+git checkout -b feature/ana-painel-ci
 # editar código
 .venv\Scripts\python -m pytest -q
 git add .
-git commit -m "feat: ajusta regra de calculo"
-git push -u origin feature/ana-ajusta-calculo
+git commit -m "feat: atualiza painel visual"
+git push -u origin feature/ana-painel-ci
 ```
 
 Depois, abra o Merge Request no GitLab para `main`.

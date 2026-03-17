@@ -5,6 +5,13 @@ const colunas = {
 };
 
 const statusSequencia = ["backlog", "em_teste", "aprovado"];
+const outputRuntime = document.getElementById("runtime-output");
+
+function mostrarOutputRuntime(texto, tipo) {
+  outputRuntime.classList.remove("ok", "error");
+  outputRuntime.classList.add(tipo);
+  outputRuntime.textContent = texto;
+}
 
 function limparColunas() {
   Object.values(colunas).forEach((coluna) => {
@@ -80,3 +87,22 @@ document
   });
 
 carregarCards();
+
+document
+  .getElementById("simular-erro-btn")
+  .addEventListener("click", async () => {
+    const resposta = await fetch("/api/simular-erro", {
+      method: "POST",
+    });
+
+    const corpo = await resposta.json();
+    if (!resposta.ok) {
+      mostrarOutputRuntime(
+        `Erro ${resposta.status} - ${corpo.tipo}: ${corpo.erro}`,
+        "error"
+      );
+      return;
+    }
+
+    mostrarOutputRuntime(`Sucesso ${resposta.status}: ${corpo.mensagem}`, "ok");
+  });

@@ -88,5 +88,23 @@ def atualizar_status(card_id: int):
     return jsonify(card), 200
 
 
+@app.post("/api/simular-erro")
+def simular_erro_execucao():
+    try:
+        _ = 1 / 0
+    except ZeroDivisionError:
+        return (
+            jsonify(
+                {
+                    "erro": "Simulação de erro em execução: divisão por zero.",
+                    "tipo": "ZeroDivisionError",
+                }
+            ),
+            500,
+        )
+
+    return jsonify({"mensagem": "Sem erro"}), 200
+
+
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)

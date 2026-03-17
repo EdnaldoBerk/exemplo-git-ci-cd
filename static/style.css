@@ -32,6 +32,7 @@ body {
 
 .hero,
 .form-card,
+.runtime-card,
 .column {
   border: 1px solid var(--line);
   border-radius: 14px;
@@ -55,6 +56,45 @@ body {
 
 .form-card {
   padding: 18px;
+}
+
+.runtime-card {
+  padding: 18px;
+}
+
+.runtime-card h2 {
+  margin: 0 0 8px;
+  font-size: 1.1rem;
+}
+
+.runtime-card p {
+  margin: 0 0 12px;
+  color: var(--soft-ink);
+}
+
+.warn-main {
+  background: linear-gradient(120deg, #b95d38, var(--accent-2));
+}
+
+.runtime-output {
+  margin-top: 12px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid var(--line);
+  background: #fff;
+  min-height: 40px;
+}
+
+.runtime-output.error {
+  border-color: #b95d38;
+  background: #fff2ed;
+  color: #7f2c17;
+}
+
+.runtime-output.ok {
+  border-color: #2f8c6c;
+  background: #eefaf4;
+  color: #1f684f;
 }
 
 .form-card h2 {

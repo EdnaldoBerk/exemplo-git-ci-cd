@@ -81,3 +81,13 @@ def test_atualizar_status_invalido():
 
     assert resposta.status_code == 400
     assert "Status inválido" in resposta.get_json()["erro"]
+
+
+def test_simular_erro_execucao():
+    cliente = app.test_client()
+    resposta = cliente.post("/api/simular-erro")
+
+    assert resposta.status_code == 500
+    corpo = resposta.get_json()
+    assert corpo["tipo"] == "ZeroDivisionError"
+    assert "Simulação de erro" in corpo["erro"]
